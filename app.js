@@ -16,10 +16,6 @@ var express = require('express');
 var cfenv = require('cfenv');
 var db2 = null;
 
-if (process.env.VCAP_SERVICES == null) {
-  process.env.VCAP_SERVICES = '{   "sqldb": [      {         "name": "AlterAPISQLDatabase",         "label": "sqldb",         "plan": "sqldb_free",         "credentials": {            "port": 50000,            "db": "SQLDB",            "username": "user09490",            "host": "75.126.155.153",            "hostname": "75.126.155.153",            "jdbcurl": "jdbc:db2://75.126.155.153:50000/SQLDB",            "uri": "db2://user09490:p1mvA1wffvDx@75.126.155.153:50000/SQLDB",            "password": "p1mvA1wffvDx"         }      }   ]}';
-}
-
 if (process.env.VCAP_SERVICES) {
   var env = JSON.parse(process.env.VCAP_SERVICES);
   db2 = env['sqldb'][0].credentials;
@@ -81,6 +77,7 @@ function generateFeed(categories, entries) {
 // create a new express server
 var app = express();
 
+// Part of the AlterAPI tutorial.  Not part of dLogIt
 app.get('/static-menu/', function(req, res) {
   // the feed returning logic goes here.
   fs.readFile('alter_api_response.xml', 'utf8', function (err, data) {
@@ -96,6 +93,7 @@ app.get('/static-menu/', function(req, res) {
   });
 });
 
+// Part of the AlterAPI tutorial.  Not part of dLogIt
 app.get('/menu/', function(req, res) {
     fetchFromDB('SELECT * FROM MENU_CATEGORY', function(err, data) {
         if (!err) {
@@ -120,6 +118,30 @@ app.get('/menu/', function(req, res) {
         }
     });
 });
+
+// The following lines are required to parse json in recent versions of express.
+var bodyParser = require('body-parser');
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
+
+// dLogIt entrypoint
+var getMeals = function (req, res) {
+  // TODO
+}
+
+// dLogIt entrypoint
+var addMeal = function(req, res) {
+  console.log(JSON.stringify(req.body));
+  res.set('Content-Type', 'text/xml');
+  res.send(JSON.stringify(req.body));
+}
+
+// dLogIt entrypoint routing
+app.route('/addmeal')
+  .get(getMeals)
+  .post(addMeal);
 
 function handleError(err, req, res) {
     console.log('Returning status 500\n');

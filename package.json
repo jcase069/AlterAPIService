@@ -9,7 +9,8 @@
 		"express": "4.12.x",
 		"cfenv": "1.0.x",
 		"ibm_db": "*",
-		"xmlbuilder": "*"
+		"xmlbuilder": "*",
+		"body-parser": "*"
 	},
 	"repository": {},
 	"engines": {
