@@ -5,7 +5,7 @@
 //------------------------------------------------------------------------------
 
 var fs = require('fs');
-var db = require('ibm_db');
+var db = require('./db.js');
 
 // This application uses express as its web server
 // for more info, see: http://expressjs.com
@@ -14,37 +14,6 @@ var express = require('express');
 // cfenv provides access to your Cloud Foundry environment
 // for more info, see: https://www.npmjs.com/package/cfenv
 var cfenv = require('cfenv');
-var db2 = null;
-
-if (process.env.VCAP_SERVICES) {
-  var env = JSON.parse(process.env.VCAP_SERVICES);
-  db2 = env['sqldb'][0].credentials;
-}
-else {
-  console.log("DB2 credentials not found\n");
-}
-
-var dbConnection = "DRIVER={DB2};DATABASE=" + db2.db + ";UID=" + db2.username + ";PWD=" + db2.password + ";HOSTNAME=" + db2.hostname + ";port=" + db2.port;
-
-function fetchFromDB(query, fetch_handler) {
-    db.open(dbConnection, function(err, conn) {
-        if (err) {
-            console.log(err);
-            fetch_handler(err, undefined);
-        } else {
-            conn.query(query, function(err, data) {
-                if (err) {
-                    console.log('Error executing query: '+query);
-                    fetch_handler(err, undefined);
-                } else {
-                    conn.close();
-                    fetch_handler(err, data);
-                }
-            });
-        }
-    });
-}
-
 var builder = require('xmlbuilder');
 
 function generateFeed(categories, entries) {
@@ -95,11 +64,11 @@ app.get('/static-menu/', function(req, res) {
 
 // Part of the AlterAPI tutorial.  Not part of dLogIt
 app.get('/menu/', function(req, res) {
-    fetchFromDB('SELECT * FROM MENU_CATEGORY', function(err, data) {
+    db.fetchFromDB('SELECT * FROM MENU_CATEGORY', function(err, data) {
         if (!err) {
             var categories = data;
 
-            fetchFromDB('SELECT * FROM MENU_ENTRY', function(err, data) {
+            db.fetchFromDB('SELECT * FROM MENU_ENTRY', function(err, data) {
                 if (!err) {
                     var entries = data;
 
