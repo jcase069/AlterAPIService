@@ -1,3 +1,5 @@
+BEGIN;
+
 -- Table 1
 CREATE TABLE user
 ( user_id number(10) NOT NULL,
@@ -7,27 +9,32 @@ CREATE TABLE user
 
 -- Table 2
 CREATE TABLE BloodSugar
-( bloodsugar_id number(6) NOT NULL,
+( blood_sugar_id number(6) NOT NULL,
+  user_id number(10) NOT NULL,
   measurement varchar(10) NOT NULL,
   CONSTRAINT blood_sugar_pk PRIMARY KEY (blood_sugar_id)
 );
 
 -- Table 3
 CREATE TABLE meals
-( meal_ID number(10) NOT NULL,
-  premeal_blood_sugar_reading varchar(50) NOT NULL,
-  bloodsugar_id number(6),
+( meal_ID INT PRIMARY KEY,
+  premeal_blood_sugar_id number(6),
   meal_time datetime,
+  est_carbs number(10),
   Insulin number(10),
-  postmeal_blood_sugar_reading(6),
-  CONSTRAINT meals_pk PRIMARY KEY (meal_ID),
-  CONSTRAINT fk_bloodsugar
-    FOREIGN KEY (bloodsugar_id)
-    REFERENCES BloodSugar(bloodsugar_id)
+  postmeal_blood_sugar_id number(6),
+  CONSTRAINT fk_bloodsugar1
+    FOREIGN KEY (premeal_blood_sugar_id)
+    REFERENCES BloodSugar(blood_sugar_id),
+  CONSTRAINT fk_bloodsugar2
+    FOREIGN KEY (postmeal_blood_sugar_id)
+    REFERENCES BloodSugar(blood_sugar_id)
 );
 
 --Table 4
 CREATE TABLE Photos (
-meal_ID,
-user_ID
+  user_id number(10) NOT NULL,
+  data BLOB
 );
+
+COMMIT;
