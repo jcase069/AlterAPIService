@@ -78,7 +78,7 @@ module.exports.getUser = function (user_id, handler) {
 
 module.exports.updateUser = function(user, handler) {
   db.serialize(function() {
-    db.run("UPDATE users SET user_name='$user_name' WHERE user_id=$user_id",
+    db.run("UPDATE users SET user_name=$user_name WHERE user_id=$user_id",
       {$user_name: user.user_name, $user_id: user.user_id},
       handler
     );
