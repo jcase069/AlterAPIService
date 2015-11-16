@@ -4,7 +4,7 @@ dLogit is a meal logging application for Android.  This is the back-end
 processing application for Node.js, based on the Bluemix starter application
 template.
 
-Here is a link to the InVision prototype:  https://invis.io/WP4L91QNA
+Here is a link to the InVision prototype:  https://invis.io/TC4XN9EQV
 
 Here is the dLogit project website: http://www.dlogit.com
 
