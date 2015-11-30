@@ -1,7 +1,15 @@
 var sqlite = require('./sqlite.js'),
   async = require('async');
 
-var testUserCrud = function() {
+var testMealCrud = function(callback) {
+  throw 'Error: Not implemented.';
+  var _err=null;
+  if (callback) {
+    callback(_err);
+  }
+};
+
+var testUserCrud = function(callback) {
   var user_id, user, user2;
   async.series([
     // 0. Add a user, put the new id into user_id
@@ -48,7 +56,23 @@ var testUserCrud = function() {
         throw 'Error: Actual ' + user2.user_name + ', Expected ' + user3.user_name;
       }
     }
+    if (callback) {
+      callback(err);
+    }
   });
 }
 
-testUserCrud();
+async.series(
+  [
+    testUserCrud,
+    testMealCrud,
+  ],
+  function(err, results) {
+    if (err) {
+      console.log('Error '+err);
+      throw 'Error '+err;
+    } else {
+      console.log('All tests complete');
+    }
+  }
+);

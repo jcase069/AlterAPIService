@@ -44,7 +44,18 @@ module.exports.initialize = function (handler) {
     db.run("PRAGMA foreign_keys = ON;", dbCallback('foreign_keys Pragma'));
   });
   handler(_err);
-}
+};
+
+module.exports.listMeals = function(user_id, handler) {
+  db.all("SELECT meal_ID, meal_time, est_carbs FROM meals WHERE user_id=$user_id;",
+    {$user_id: user_id}, handler);
+};
+
+module.exports.getMeal = function(user_id, meal_id, handler) {
+  db.get("SELECT meal_time, est_carbs FROM meals WHERE user_id=$user_id AND meal_ID=$meal_id;",
+    {$user_id: user_id, $meal_id: meal_id},
+    handler);
+};
 
 module.exports.addMeal = function (user_id, meal, handler) {
   // handler function takes (err, data), but no data will be returned by this function.
@@ -55,7 +66,24 @@ module.exports.addMeal = function (user_id, meal, handler) {
     );
     db.get("SELECT last_insert_rowid();", function(err, obj) {handler(err, obj['last_insert_rowid()']);});
   });
-}
+};
+
+module.exports.updateMeal = function (user_id, meal, handler) {
+  db.run("UPDATE meals SET meal_time=$meal_time, est_carbs=$est_carbs WHERE meal_ID=$meal_id AND user_id=$user_id",
+    {
+      $meal_time: meal.meal_time,
+      $est_carbs: meal.est_carbs,
+      $meal_id: meal.meal_ID,
+      $user_id: user_id
+    },
+    handler);
+};
+
+module.exports.deleteMeal = function (user_id, meal_id, handler) {
+  db.run("DELETE FROM meals WHERE user_id=$user_id AND meal_id=$meal_id",
+    {$user_id: user_id, $meal_id: meal_id},
+    handler);
+};
 
 module.exports.addUser = function (user, handler) {
   db.serialize(function() {
