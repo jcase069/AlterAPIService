@@ -2,11 +2,61 @@ var sqlite = require('./sqlite.js'),
   async = require('async');
 
 var testMealCrud = function(callback) {
-  throw 'Error: Not implemented.';
-  var _err=null;
-  if (callback) {
-    callback(_err);
-  }
+  var _err=null, user_id, meal_id;
+  async.series([
+    // 0. First, create a user for testing
+    function(callback) {
+      sqlite.addUser({user_name: 'Test User Meal'}, function(err, val) {
+        user_id = val;
+        callback(err, val);
+      });
+    },
+    // 1. Create a meal
+    function(callback) {
+      sqlite.addMeal(user_id, {est_carbs: 20}, function(err, val) {
+        meal_id = val;
+        callback(err, val);
+      });
+    },
+    // 2. Get the meal detail's est_carbs
+    function (callback) {
+      sqlite.getMeal(user_id, meal_id, function(err, val) {
+        callback(err, val.est_carbs);
+      });
+    },
+    // 3. Update the meal's est_carbs
+    function(callback) {
+      sqlite.updateMeal(user_id, {meal_ID: meal_id, est_carbs: 25, meal_time: '2015-12-04 12:00'}, function(err) {
+        callback(err, null);
+      });
+    },
+    // 4. Get the meal's new est_carbs
+    function(callback) {
+      sqlite.getMeal(user_id, meal_id, function(err, val) {
+        callback(err, val.est_carbs);
+      });
+    },
+    // 5. Delete the meal.
+    function(callback) {
+      sqlite.deleteMeal(user_id, meal_id, function(err) {
+        callback(err, null);
+      });
+    }
+  ], function(err, results) {
+    if (err) {
+      console.log('Error '+err);
+      throw 'Error ' + err;
+    } else {
+      if (results[2] == 20 && results[4] == 25) {
+        console.log('Passed testMealCrud');
+      } else {
+        throw 'testMealCrud: Expected 20 and 25, got ' + results[2] + ' and ' + results[4];
+      }
+    }
+    if (callback) {
+      callback(err);
+    }
+  });
 };
 
 var testUserCrud = function(callback) {
@@ -29,7 +79,6 @@ var testUserCrud = function(callback) {
     // 2. List all users.
     function(callback) {
       sqlite.listUsers(function(err, val) {
-        debugger;
         callback(err, val);
       })
     },
