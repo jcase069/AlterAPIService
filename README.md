@@ -1,7 +1,12 @@
-# Node.js Starter Application
+# dLogit AlterAPIService
 
-Bluemix provides a Node.js starter application as a template so that you can
-add your code and push the changes back to the Bluemix environment.
+dLogit is a meal logging application for Android.  This is the back-end
+processing application for Node.js, based on the Bluemix starter application
+template.
+
+Here is a link to the InVision prototype:  https://invis.io/TC4XN9EQV
+
+Here is the dLogit project website: http://www.dlogit.com
 
 ## Files
 
@@ -11,11 +16,31 @@ The Node.js starter application has files as below:
 
 	This file contains the server side JavaScript code for your application
 	written using the express server package.
+	
+* db.js
+
+	Code for connecting to the production database, IBM DB2.
+	
+* sqlite.js
+
+	Code for connecting to the test database, running on sqlite3.
+	
+* test.js
+
+	Run this to test the operations on the test database, test.db
+	
+* test.db
+
+	Sqlite database for testing.
 
 * public/
 
 	This directory contains public resources of the application, that will be
 	served up by this server
+	
+* sql/
+
+	Sql scripts for creating and manipulating the relational tables.
 
 * package.json
 
