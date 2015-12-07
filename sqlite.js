@@ -46,6 +46,39 @@ module.exports.initialize = function (handler) {
   handler(_err);
 };
 
+module.exports.listBloodSugars = function(user_id, handler) {
+  db.all("SELECT blood_sugar_id, measurement, measurement_time FROM blood_sugar WHERE user_id=$user_id;",
+    {$user_id: user_id}, handler);
+}
+
+module.exports.getBloodSugar = function(user_id, blood_sugar_id, handler) {
+  db.get("SELECT blood_sugar_id, measurement, measurement_time FROM blood_sugar WHERE user_id=$user_id AND blood_sugar_id=$blood_sugar_id;",
+    {$user_id: user_id, $blood_sugar_id: blood_sugar_id},
+    handler);
+}
+
+module.exports.addBloodSugar = function(user_id, measurement, handler) {
+  db.serialize(function() {
+    db.run("INSERT INTO blood_sugar (user_id, measurement, measurement_time) VALUES ($user_id, $measurement, current_timestamp)",
+      {$user_id: user_id, $measurement: measurement},
+      dbCallback('addBloodSugar insert')
+    );
+    db.get("SELECT last_insert_rowid();", function(err, obj) {handler(err, obj['last_insert_rowid']);});
+  });
+}
+
+module.exports.updateBloodSugar = function(user_id, blood_sugar, handler) {
+  db.run("UPDATE blood_sugar SET measurement=$measurement, measurement_time=$measurement_time WHERE blood_sugar_id=$blood_sugar_id AND user_id=$user_id",
+    {
+      $measurement: blood_sugar.measurement,
+      $measurement_time: blood_sugar.measurement_time,
+      $blood_sugar_id: blood_sugar.blood_sugar_id,
+      $user_id: user_id
+    },
+    handler
+  );
+}
+
 module.exports.listMeals = function(user_id, handler) {
   db.all("SELECT meal_ID, meal_time, est_carbs FROM meals WHERE user_id=$user_id;",
     {$user_id: user_id}, handler);

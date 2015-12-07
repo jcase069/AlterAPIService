@@ -8,6 +8,7 @@ CREATE TABLE blood_sugar
 ( blood_sugar_id INTEGER PRIMARY KEY,
   user_id INTEGER NOT NULL,
   measurement varchar(10) NOT NULL,
+  measurement_time datetime,
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
