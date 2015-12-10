@@ -17,9 +17,54 @@ function compileTestResult(err, results, testName, verificationFunction) {
 }
 
 var testBloodSugarCrud = function(callback) {
+  var user_id, blood_sugar_id;
   async.series([
+    // 0. Create a user for testing
+    function(callback) {
+      sqlite.addUser({user_name: 'Test User Blood Sugar'}, function(err, val) {
+        user_id = val;
+        callback(err, val);
+      });
+    },
+    // 1. Create a blood sugar measurement
+    function(callback) {
+      sqlite.addBloodSugar(user_id, 42, function(err, val) {
+        blood_sugar_id = val;
+        callback(err, val);
+      });
+    },
+    // 2. Get the meal measurement
+    function(callback) {
+      sqlite.getBloodSugar(user_id, blood_sugar_id, function(err, val) {
+        callback(err, val.measurement);
+      });
+    },
+    // 3. Update the measurement
+    function(callback) {
+      sqlite.updateBloodSugar(user_id, {
+        blood_sugar_id: blood_sugar_id,
+        measurement_time: '2015-12-10 11:00',
+        measurement: 43
+      }, callback);
+    },
+    // 4. Get back the new measurement
+    function(callback) {
+      sqlite.getBloodSugar(user_id, blood_sugar_id, callback);
+    },
+    // 5. Delete the measurement
+    function(callback) {
+      sqlite.deleteBloodSugar(user_id, blood_sugar_id, callback);
+    },
+    // 6. Delete the user
+    function(callback) {
+      sqlite.deleteUser(user_id, callback);
+    }
   ], function(err, results) {compileTestResult(err, results, 'testBloodSugarCrud', function(results) {
-    return 'testBloodSugarCrud not yet implemented';
+    if (results[2]==42 && results[4].measurement == 43) {
+      return null;
+    } else {
+      return 'Expected 42 and 43, and got ' + results[2] + ' and ' +results[4].measurement;
+    }
   });}
 );
 }
@@ -64,6 +109,10 @@ var testMealCrud = function(callback) {
       sqlite.deleteMeal(user_id, meal_id, function(err) {
         callback(err, null);
       });
+    },
+    // 6. Delete the user.
+    function(callback) {
+      sqlite.deleteUser(user_id, callback);
     }
   ], function(err, results) {
     compileTestResult(err, results, 'testMealCrud', function(results){

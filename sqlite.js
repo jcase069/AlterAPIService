@@ -63,7 +63,9 @@ module.exports.addBloodSugar = function(user_id, measurement, handler) {
       {$user_id: user_id, $measurement: measurement},
       dbCallback('addBloodSugar insert')
     );
-    db.get("SELECT last_insert_rowid();", function(err, obj) {handler(err, obj['last_insert_rowid']);});
+    db.get("SELECT last_insert_rowid();", function(err, obj) {
+      handler(err, obj['last_insert_rowid()']);
+    });
   });
 }
 
@@ -75,6 +77,13 @@ module.exports.updateBloodSugar = function(user_id, blood_sugar, handler) {
       $blood_sugar_id: blood_sugar.blood_sugar_id,
       $user_id: user_id
     },
+    handler
+  );
+}
+
+module.exports.deleteBloodSugar = function(user_id, blood_sugar_id, handler) {
+  db.run('DELETE FROM blood_sugar WHERE user_id=$user_id AND blood_sugar_id=$blood_sugar_id',
+    {$user_id: user_id, $blood_sugar_id: blood_sugar_id},
     handler
   );
 }
