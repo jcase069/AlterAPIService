@@ -1,6 +1,29 @@
 var sqlite = require('./sqlite.js'),
   async = require('async');
 
+// verificationFunction(results) returns null on success, string describing failure otherwise
+function compileTestResult(err, results, testName, verificationFunction) {
+  if (err) {
+    console.log('Error ' + err);
+    throw 'Error ' + err;
+  } else {
+    var verification = verificationFunction(results);
+    if (verification == null) {
+      console.log('Passed ' + testName);
+    } else {
+      throw 'Failed '+testName+': '+verification;
+    }
+  }
+}
+
+var testBloodSugarCrud = function(callback) {
+  async.series([
+  ], function(err, results) {compileTestResult(err, results, 'testBloodSugarCrud', function(results) {
+    return 'testBloodSugarCrud not yet implemented';
+  });}
+);
+}
+
 var testMealCrud = function(callback) {
   var _err=null, user_id, meal_id;
   async.series([
@@ -43,16 +66,13 @@ var testMealCrud = function(callback) {
       });
     }
   ], function(err, results) {
-    if (err) {
-      console.log('Error '+err);
-      throw 'Error ' + err;
-    } else {
+    compileTestResult(err, results, 'testMealCrud', function(results){
       if (results[2] == 20 && results[4] == 25) {
-        console.log('Passed testMealCrud');
+        return null;
       } else {
-        throw 'testMealCrud: Expected 20 and 25, got ' + results[2] + ' and ' + results[4];
+        return 'Expected 20 and 25, got ' + results[2] + ' and ' + results[4];
       }
-    }
+    });
     if (callback) {
       callback(err);
     }
@@ -96,15 +116,13 @@ var testUserCrud = function(callback) {
       sqlite.deleteUser(user_id, function(err, val) {callback(err);});
     }
   ], function(err, results) {
-    if (err) {
-      console.log('Error '+err);
-    } else {
+    compileTestResult(err, results, 'testUserCrud', function(results) {
       if (user2.user_name == results[4].user_name) {
-        console.log('Passed testUserCrud');
+        return null;
       } else {
-        throw 'Error: Actual ' + user2.user_name + ', Expected ' + user3.user_name;
+        return 'Actual ' + user2.user_name + ', Expected ' + user3.user_name;
       }
-    }
+    });
     if (callback) {
       callback(err);
     }
@@ -115,6 +133,7 @@ async.series(
   [
     testUserCrud,
     testMealCrud,
+    testBloodSugarCrud,
   ],
   function(err, results) {
     if (err) {
