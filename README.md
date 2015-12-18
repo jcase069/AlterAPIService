@@ -33,10 +33,20 @@ The Node.js starter application has files as below:
 
 	Sqlite database for testing.
 
+* app/
+
+	This directory contains the dynamic website content.
+
+* config/
+
+	This directory contains the configuration of the express web server,
+	connecting the models, views and controllers.
+
 * public/
 
-	This directory contains public resources of the application, that will be
-	served up by this server
+	This directory contains public static files of the application, that will be
+	served up by this server, e.g. javascript libraries, stylesheets and static 
+	html files.
 	
 * sql/
 
