@@ -15,11 +15,11 @@ CREATE TABLE blood_sugar
 CREATE TABLE meals
 ( meal_ID INTEGER PRIMARY KEY,
   user_id INTEGER NOT NULL,
-  premeal_blood_sugar_id number(6),
+  premeal_blood_sugar_id INTEGER,
   meal_time datetime,
   est_carbs number(10),
   Insulin number(10),
-  postmeal_blood_sugar_id number(6),
+  postmeal_blood_sugar_id INTEGER,
   FOREIGN KEY (user_id) REFERENCES users(user_id)
   FOREIGN KEY (premeal_blood_sugar_id) REFERENCES blood_sugar(blood_sugar_id),
   FOREIGN KEY (postmeal_blood_sugar_id) REFERENCES blood_sugar(blood_sugar_id)
