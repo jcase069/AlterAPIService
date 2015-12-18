@@ -1,4 +1,6 @@
-var express = require('express'),
+var
+  config = require('./config'),
+  express = require('express'),
   morgan = require('morgan'),
   compress = require('compression'),
   bodyParser = require('body-parser');
