@@ -3,7 +3,8 @@ var
   express = require('express'),
   morgan = require('morgan'),
   compress = require('compression'),
-  bodyParser = require('body-parser');
+  bodyParser = require('body-parser'),
+  session = require('express-session');
 
 module.exports = function() {
   var app = express();
@@ -18,6 +19,12 @@ module.exports = function() {
     extended: true
   }));
   app.use(bodyParser.json());
+
+  app.use(session({
+    saveUninitialized: true,
+    resave: true,
+    secret: config.sessionSecret
+  }));
 
   app.set('views', './app/views');
   app.set('view engine', 'ejs');
