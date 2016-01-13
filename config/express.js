@@ -15,6 +15,8 @@ module.exports = function() {
     app.use(compress());
   }
 
+  require('../app/models/all.server.model.js')(config.dbInit());
+
   app.use(bodyParser.urlencoded({
     extended: true
   }));
