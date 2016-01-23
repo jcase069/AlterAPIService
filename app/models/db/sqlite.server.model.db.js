@@ -125,10 +125,10 @@ module.exports = function(db_file) {
       handler);
   };
 
-  toReturn.addUser = function (user, handler) {
+  toReturn.addUser = function (user, password_digest, salt, handler) {
     db.serialize(function() {
-      db.run("INSERT INTO users (user_name) VALUES ($user_name);",
-        {$user_name: user.user_name},
+      db.run("INSERT INTO users (user_name, password_digest, salt) VALUES ($user_name, $password_digest, $salt);",
+        {$user_name: user.user_name, $password_digest: password_digest, $salt: salt},
         dbCallback('addUser insert')
       );
       db.get("SELECT last_insert_rowid();", function(err, obj) {handler(err, obj['last_insert_rowid()']);});
@@ -137,7 +137,7 @@ module.exports = function(db_file) {
 
   toReturn.getUser = function (user_id, handler) {
     db.serialize(function() {
-      db.get("SELECT * FROM users WHERE user_id=$user_id",
+      db.get("SELECT user_id, user_name FROM users WHERE user_id=$user_id",
         {$user_id: user_id},
         handler
       );
@@ -146,7 +146,7 @@ module.exports = function(db_file) {
 
   toReturn.getUserByName = function (user_name, handler) {
     db.serialize(function() {
-      db.get("SELECT * FROM users WHERE user_name=$user_name",
+      db.get("SELECT user_id, user_name FROM users WHERE user_name=$user_name",
         {$user_name: user_name},
         handler
       );
@@ -166,6 +166,13 @@ module.exports = function(db_file) {
         handler
       );
     })
+  }
+
+  toReturn.updateUserPassword = function(user_id, password_digest, salt, handler) {
+    db.run("UPDATE users SET password_digest=$password_digest, salt=$salt WHERE user_id=$user_id",
+      {$user_id: user_id, $salt: salt, $password_digest: password_digest},
+      handler
+    )
   }
 
   toReturn.deleteUser = function (user_id, handler) {

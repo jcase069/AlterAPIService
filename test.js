@@ -17,9 +17,11 @@ function compileTestResult(err, results, testName, verificationFunction) {
 }
 
 function createUserForTesting(funcName, params) {
+  var testSalt='DEADBEEFFEEDFACE',
+    testPasswordDigest='FakeDigest';
   return function(callback) {
     debugger;
-    sqlite.addUser({user_name: 'Test '+funcName}, function (err, val) {
+    sqlite.addUser({user_name: 'Test '+funcName}, testPasswordDigest, testSalt, function (err, val) {
       debugger;
       if (!err) {
         params.user_id = val;
