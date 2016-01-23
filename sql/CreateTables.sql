@@ -2,7 +2,7 @@
 CREATE TABLE users
 ( user_id INTEGER PRIMARY KEY,
   user_name varchar(50) NOT NULL,
-  salt varchar(16) NULL,
+  salt varchar(24) NULL,
   password_digest varchar(100) NULL
 );
 
