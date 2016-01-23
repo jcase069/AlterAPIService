@@ -144,6 +144,15 @@ module.exports = function(db_file) {
     });
   }
 
+  toReturn.getUserByName = function (user_name, handler) {
+    db.serialize(function() {
+      db.get("SELECT * FROM users WHERE user_name=$user_name",
+        {$user_name: user_name},
+        handler
+      );
+    })
+  }
+
   toReturn.listUsers = function (handler) {
     db.serialize(function() {
       db.all("SELECT user_id, user_name FROM users", handler);

@@ -4,7 +4,8 @@ var
   morgan = require('morgan'),
   compress = require('compression'),
   bodyParser = require('body-parser'),
-  session = require('express-session');
+  session = require('express-session'),
+  passport = require('passport');
 
 module.exports = function() {
   var app = express();
@@ -27,6 +28,9 @@ module.exports = function() {
     resave: true,
     secret: config.sessionSecret
   }));
+
+  app.use(passport.initialize());
+  app.use(passport.session());
 
   app.set('views', './app/views');
   app.set('view engine', 'ejs');

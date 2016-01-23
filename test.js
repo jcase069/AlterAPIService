@@ -132,7 +132,7 @@ var testMealCrud = function(callback) {
 };
 
 var testUserCrud = function(callback) {
-  var params={}, user, user2;
+  var params={}, user, user2, username;
   async.series([
     // 0. Add a user, put the new id into user_id
     createUserForTesting('User Crud', params),
@@ -158,13 +158,17 @@ var testUserCrud = function(callback) {
     function(callback) {
       sqlite.getUser(params.user_id, function(err, val) {callback(err, val);});
     },
-    // 5. Cleanup.
+    // 5. Try reading the user by user_name
+    function(callback) {
+      sqlite.getUserByName('Han Dedges', callback);
+    },
+    // 6. Cleanup.
     function(callback) {
       sqlite.deleteUser(params.user_id, function(err, val) {callback(err);});
     }
   ], function(err, results) {
     compileTestResult(err, results, 'testUserCrud', function(results) {
-      if (user2.user_name == results[4].user_name) {
+      if (user2.user_name == results[4].user_name && results[4].user_id == results[5].user_id) {
         return null;
       } else {
         return 'Actual ' + user2.user_name + ', Expected ' + user3.user_name;
