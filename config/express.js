@@ -5,6 +5,7 @@ var
   compress = require('compression'),
   bodyParser = require('body-parser'),
   session = require('express-session'),
+  flash = require('connect-flash'),
   passport = require('passport');
 
 module.exports = function() {
@@ -29,6 +30,7 @@ module.exports = function() {
     secret: config.sessionSecret
   }));
 
+  app.use(flash());
   app.use(passport.initialize());
   app.use(passport.session());
 

@@ -5,5 +5,12 @@
   </head>
   <body>
     <h1><%= title %></h1>
+    <% if ( userName ) { %>
+      <h2>Hello <%=userName%> </h2>
+      <a href="/signout">Sign out</a>
+    <% } else { %>
+      <a href="/signup">Signup</a>
+      <a href="/signin">Signin</a>
+    <% } %>
   </body>
 </html>
