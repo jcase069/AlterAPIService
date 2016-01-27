@@ -24,8 +24,7 @@ var _generateSalt = function() {
 }
 
 var _hashPassword = function(password, salt) {
-  var pw = new Buffer(password);
-  return crypto.pbkdf2Sync(pw, this.salt, 10000, 64).toString('base64');
+  return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('base64');
 }
 
 var item={};

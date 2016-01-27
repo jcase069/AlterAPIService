@@ -18,14 +18,10 @@ exports.signup = function (req, res, next) {
     return res.redirect('/signup');
   }
   var _salt = User.generateSalt();
-  console.log("salt: "+_salt);
-  console.log("password: "+req.body.password);
   var _user = {
     user_name: req.body.user_name,
-    salt: _salt,
-    password_digest: User.hashPassword(req.body.password, _salt),
   }
-  User.add(_user, function(err, user_id) {
+  User.add(_user, User.hashPassword(req.body.password, _salt), _salt, function(err, user_id) {
     if (err) {
       var message = 'Failed to create user';
       req.flash('error', message);
