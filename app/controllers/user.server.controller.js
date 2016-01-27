@@ -12,7 +12,6 @@ var _validateCreateUserParams = function(user) {
 
 exports.signup = function (req, res, next) {
   // create User
-  console.log("Creating user");
   if (!_validateCreateUserParams(req.body)) {
     req.flash('error', 'Failed due to bad parameters')
     return res.redirect('/signup');
