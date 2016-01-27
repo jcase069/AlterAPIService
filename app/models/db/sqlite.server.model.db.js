@@ -125,10 +125,10 @@ module.exports = function(db_file) {
       handler);
   };
 
-  toReturn.addUser = function (user, password_digest, salt, handler) {
+  toReturn.addUser = function (user, handler) {
     db.serialize(function() {
       db.run("INSERT INTO users (user_name, password_digest, salt) VALUES ($user_name, $password_digest, $salt);",
-        {$user_name: user.user_name, $password_digest: password_digest, $salt: salt},
+        {$user_name: user.user_name, $password_digest: user.password_digest, $salt: user.salt},
         dbCallback('addUser insert')
       );
       db.get("SELECT last_insert_rowid();", function(err, obj) {handler(err, obj['last_insert_rowid()']);});

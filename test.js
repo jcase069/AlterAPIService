@@ -21,7 +21,7 @@ function createUserForTesting(funcName, params) {
     testPasswordDigest='FakeDigest';
   return function(callback) {
     debugger;
-    sqlite.addUser({user_name: 'Test '+funcName}, testPasswordDigest, testSalt, function (err, val) {
+    sqlite.addUser({user_name: 'Test '+funcName, password_digest: testPasswordDigest, salt: testSalt}, function (err, val) {
       debugger;
       if (!err) {
         params.user_id = val;
