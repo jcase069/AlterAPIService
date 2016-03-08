@@ -5,21 +5,24 @@
   </head>
   <body>
     <% include ./partials/navbar %>
-    
-    <h2><%= title %></h2>
-    <% if ( user ) { %>
-      <h3>Hello <%=user.user_name%> </h3>
-      <a href="/signout">Sign out</a>
-    <% } else { %>
-      <a href="/signup">Signup</a>
-      <a href="/signin">Signin</a>
-    <% } %>
 
-    <script type="text/javascript">
-      window.user = <%- user || 'null' %>;
-    </script>
+    <div class="container content-area">
+      <h2><%= title %></h2>
+      <% if ( user ) { %>
+        <h3>Hello <%=user.user_name%> </h3>
+        <a href="/signout">Sign out</a>
+      <% } else { %>
+        <a href="/signup">Signup</a>
+        <a href="/signin">Signin</a>
+      <% } %>
 
-    <section ng-view></section>
+      <script type="text/javascript">
+        window.user = <%- user || 'null' %>;
+      </script>
+
+      <section ng-view></section>
+
+    </div>
 
     <script type="text/javascript" src="/lib/angular/angular.js"></script>
     <script type="text/javascript" src="/lib/angular-route/angular-route.js"></script>

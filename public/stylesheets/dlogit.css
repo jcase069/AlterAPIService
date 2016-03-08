@@ -1,0 +1,13 @@
+body {
+  padding-top: 50px;
+}
+
+.content-area {
+  text-align: center;
+  max-width: 700px;
+}
+
+.content-area p {
+  text-align:left;
+  padding: 10px;
+}
