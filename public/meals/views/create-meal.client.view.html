@@ -1,0 +1,23 @@
+<section data-ng-controller="MealsController">
+  <h1>New Meal</h1>
+  <form data-ng-submit="create()" novalidate>
+    <div>
+      <label for="meal_time">Meal Time</label>
+      <div>
+        <input type="text" data-ng-model="meal_time" id="meal_time" placeholder="Now" required>
+      </div>
+    </div>
+    <div>
+      <label for="est_carbs">Estimated Carbs</label>
+      <div>
+        <textarea data-ng-model="est_carbs" id="est_carbs" cols="10" rows="1" placeholder="0"></textarea>
+      </div>
+    </div>
+    <div>
+      <input type="submit">
+    </div>
+    <div data-ng-show="error">
+      <strong data-ng-bind="error"></strong>
+    </div>
+  </form>
+</section>

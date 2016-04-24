@@ -1,0 +1,23 @@
+<section data-ng-controller="MealsController" data-nginit="findOne()">
+  <h1>Edit Meal</h1>
+  <form data-ng-submit="update()" novalidate>
+    <div>
+      <label for="meal_time">Meal Time:</label>
+      <div>
+        <input type="text" data-ng-model="meal.meal_time" id="meal_time" placeholder="0" required>
+      </div>
+    </div>
+    <div>
+      <label for="content">Estimated Carbs:</label>
+      <div>
+        <textarea data-ng-model="meal.est_carbs" id="content" cols="10" rows="1" placeholder="0"></textarea>
+      </div>
+    </div>
+    <div>
+      <input type="submit" value="Update">
+    </div>
+    <div data-ng-show="error">
+      <strong data-ng-bind="error"></strong>
+    </div>
+  </form>
+</section>

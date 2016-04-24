@@ -1,0 +1,12 @@
+<section data-ng-controller="MealsController" data-nginit="find()">
+  <h1>Meals</h1>
+  <ul>
+    <li data-ng-repeat="meal in meals">
+      <a data-ng-href="#!/meals/{{meal._id}}" data-ngbind="meal.meal_time"></a>
+      <br>
+    </li>
+  </ul>
+  <div data-ng-hide="!meals || meals.length">
+    <a href="/#!/meals/create">Create</a>
+  </div>
+</section>
