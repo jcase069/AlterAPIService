@@ -16,24 +16,26 @@ exports.create = function(req, res) {
         message: getErrorMessage(err)
       });
     } else {
-      res.json(meal_id);
+      res.json({_id: meal_id});
     }
   });
 };
 
 exports.list = function(req, res) {
-  meals.list(req.user_id, function(err, meals) {
+  meals.list(req.user_id, function(err, ms) {
+    console.log("Listed "+ms.length+" meals")
     if (err) {
       return res.status(400).send({
         message: getErrorMessage(err)
       });
     } else {
-      res.json(meals);
+      res.json(ms);
     }
   })
 };
 
 exports.mealById = function(req, res, next, meal_id) {
+  console.log("Reading meal id "+meal_id);
   meals.get(req.user.user_id, meal_id, function(err, obj) {
     if (err) {
       next(err);
@@ -49,6 +51,7 @@ exports.mealById = function(req, res, next, meal_id) {
 }
 
 exports.read = function(req, res) {
+  console.log("meals.read "+JSON.stringify(req.meal));
   res.json(req.meal);
 }
 

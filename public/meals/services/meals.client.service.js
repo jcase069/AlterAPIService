@@ -1,6 +1,6 @@
-angular.module('articles').factory('Articles', ['$resource', function($resource) {
+angular.module('meals').factory('Meals', ['$resource', function($resource) {
   return $resource('api/meals/:mealId', {
-    mealId: '@-id'
+    mealId: '@_id'
   }, {
     update: {
       method: 'PUT'

@@ -5,7 +5,7 @@ angular.module('meals').config(['$routeProvider',
       templateUrl: 'meals/views/list-meal.client.view.html'
     }).
     when('/meals/create', {
-      templateUrl: 'articles/views/create-meal.client.view.html'
+      templateUrl: 'meals/views/create-meal.client.view.html'
     }).
     when('/meals/:mealId', {
       templateUrl: 'meals/views/view-meal.client.view.html'
