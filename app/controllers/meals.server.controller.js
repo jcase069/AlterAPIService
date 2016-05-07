@@ -22,8 +22,7 @@ exports.create = function(req, res) {
 };
 
 exports.list = function(req, res) {
-  meals.list(req.user_id, function(err, ms) {
-    console.log("Listed "+ms.length+" meals")
+  meals.list(req.user.user_id, function(err, ms) {
     if (err) {
       return res.status(400).send({
         message: getErrorMessage(err)
