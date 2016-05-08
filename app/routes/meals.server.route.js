@@ -11,5 +11,5 @@ module.exports = function(app) {
     .put(users.requiresLogin, meals.hasAuthorization, meals.update)
     .delete(users.requiresLogin, meals.hasAuthorization, meals.delete);
 
-  app.param('meal_id', meals.mealById);
+  app.param('mealId', meals.mealById);
 };
