@@ -35,6 +35,7 @@ angular.module('meals').controller('MealsController', ['$scope', '$routeParams',
 
     $scope.delete = function(meal) {
       if (meal) {
+        meal._id=meal.meal_ID;
         meal.$remove(function() {
           for (var i in $scope.meals) {
             if ($scope.meals[i] === meal) {

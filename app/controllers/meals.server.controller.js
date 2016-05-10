@@ -73,7 +73,7 @@ exports.update = function(req, res) {
 
 exports.delete = function(req, res) {
   var meal = req.meal;
-  meals.delete(req.user_id, meal.meal_id, function(err) {
+  meals.delete(req.user.user_id, meal.meal_ID, function(err) {
     if (err) {
       res.status(400).send({
         message: getErrorMessage(err)
@@ -85,7 +85,7 @@ exports.delete = function(req, res) {
 }
 
 exports.hasAuthorization = function(req, res, next) {
-  if (req.meal.user_id !== req.user_id) {
+  if (req.meal.user_id !== req.user.user_id) {
     return res.status(403).send({
       message: 'User is not authorized'
     });

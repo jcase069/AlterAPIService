@@ -3,8 +3,8 @@
   <small>
     Estimated carbs: <em data-ng-bind="meal.est_carbs"></em>
   </small>
-  <div data-ng-show="authentication.user._id == meal.user_id">
+  <div data-ng-show="authentication.user.user_id == meal.user_id">
     <a href="/#!/meals/{{meal.meal_ID}}/edit">edit</a>
-    <a href="#" data-ng-click="delete()">delete</a>
+    <a href="#" data-ng-click="delete(meal)">delete</a>
   </div>
 </section>
