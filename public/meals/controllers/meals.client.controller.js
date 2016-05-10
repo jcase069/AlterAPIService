@@ -25,8 +25,9 @@ angular.module('meals').controller('MealsController', ['$scope', '$routeParams',
     };
 
     $scope.update = function() {
+      $scope.meal._id=$scope.meal.meal_ID;
       $scope.meal.$update(function () {
-        $location.path('meals/'+$scope.meal._id);
+        $location.path('meals/'+$scope.meal.meal_ID);
       }, function(errorResponse) {
         $scope.error = errorResponse.data.message;
       });
@@ -47,6 +48,6 @@ angular.module('meals').controller('MealsController', ['$scope', '$routeParams',
         });
       }
     };
-    
+
   }
 ]);

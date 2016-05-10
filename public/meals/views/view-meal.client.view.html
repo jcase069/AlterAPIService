@@ -1,11 +1,10 @@
 <section data-ng-controller="MealsController" data-ng-init="findOne()">
   <h1 data-ng-bind="meal.meal_time"></h1>
-  <div data-ng-show="true">
-    <!--  "authentication.user._id == meal.user_id" -->
-    <a href="/#!/meals/{{meal._id}}/edit">edit</a>
-    <a href="#" data-ng-click="delete()">delete</a>
-  </div>
   <small>
     Estimated carbs: <em data-ng-bind="meal.est_carbs"></em>
   </small>
+  <div data-ng-show="authentication.user._id == meal.user_id">
+    <a href="/#!/meals/{{meal.meal_ID}}/edit">edit</a>
+    <a href="#" data-ng-click="delete()">delete</a>
+  </div>
 </section>

@@ -92,7 +92,7 @@ module.exports = function(db_file) {
   };
 
   toReturn.getMeal = function(user_id, meal_id, handler) {
-    db.get("SELECT meal_time, est_carbs FROM meals WHERE user_id=$user_id AND meal_ID=$meal_id;",
+    db.get("SELECT meal_time, est_carbs, meal_ID FROM meals WHERE user_id=$user_id AND meal_ID=$meal_id;",
       {$user_id: user_id, $meal_id: meal_id},
       handler);
   };

@@ -34,7 +34,6 @@ exports.list = function(req, res) {
 };
 
 exports.mealById = function(req, res, next, meal_id) {
-  console.log("Reading meal id "+meal_id);
   meals.get(req.user.user_id, meal_id, function(err, obj) {
     if (err) {
       next(err);
@@ -50,7 +49,6 @@ exports.mealById = function(req, res, next, meal_id) {
 }
 
 exports.read = function(req, res) {
-  console.log("meals.read "+JSON.stringify(req.meal));
   res.json(req.meal);
 }
 
@@ -62,7 +60,7 @@ exports.update = function(req, res) {
   if (req.body.est_carbs) {
     meal.est_carbs = req.body.est_carbs;
   }
-  meals.update(req.user_id, meal, function(err) {
+  meals.update(req.user.user_id, meal, function(err) {
     if (err) {
       res.status(400).send({
         message: getErrorMessage(err)
