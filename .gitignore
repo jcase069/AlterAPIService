@@ -1,5 +1,4 @@
 logs
 node_modules
 .DS_Store
-public/lib/angular
-public/lib/angular-route
+public/lib/
