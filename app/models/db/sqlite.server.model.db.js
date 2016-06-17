@@ -87,7 +87,7 @@ module.exports = function(db_file) {
   }
 
   toReturn.listMeals = function(user_id, handler) {
-    db.all("SELECT meal_ID, meal_time, est_carbs FROM meals WHERE user_id=$user_id;",
+    db.all("SELECT meal_ID, meal_time, est_carbs FROM meals WHERE user_id=$user_id ORDER BY meal_time;",
       {$user_id: user_id}, handler);
   };
 
