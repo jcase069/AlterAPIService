@@ -6,6 +6,7 @@ var mainApplicationModule = angular.module(mainApplicationModuleName, [
 	'authentication',
 	'users',
 	'meals',
+	'bloodsugars',
 	'about'
 ]);
 
