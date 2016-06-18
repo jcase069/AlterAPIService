@@ -1,12 +1,17 @@
 <section data-ng-controller="MealsController" data-ng-init="find()">
   <h1>Meals</h1>
-  <ul>
-    <li data-ng-repeat="meal in meals">
-      <a data-ng-href="#!/meals/{{meal.meal_ID}}" data-ng-bind="meal.meal_time"></a>
-      <br>
-    </li>
-  </ul>
-  <div data-ng-hide="!meals || meals.length">
-    <a href="/#!/meals/create">Create</a>
+  <span ng-if="authentication.user == null">
+    Log in to view meal list.
+  </span>
+  <div ng-if="authentication.user && authentication.user.user_id">
+    <ul>
+      <li data-ng-repeat="meal in meals">
+        <a data-ng-href="#!/meals/{{meal.meal_ID}}" data-ng-bind="meal.meal_time"></a>
+        <br>
+      </li>
+    </ul>
+    <div data-ng-hide="!meals || meals.length">
+      <a href="/#!/meals/create">Create</a>
+    </div>
   </div>
 </section>
