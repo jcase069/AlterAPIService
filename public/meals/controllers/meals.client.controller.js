@@ -42,6 +42,7 @@ angular.module('meals').controller('MealsController', ['$scope', '$routeParams',
               $scope.meals.splice(i,1);
             }
           }
+          $location.path('meals');
         });
       } else {
         $scope.meal.$remove(function() {

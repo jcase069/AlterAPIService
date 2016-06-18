@@ -3,8 +3,8 @@ var users = require('../../app/controllers/user.server.controller'),
 
 module.exports = function(app) {
   app.route('/api/meals')
-    .get(users.requiresLogin, meals.hasAuthorization, meals.list)
-    .post(users.requiresLogin, meals.hasAuthorization, meals.create);
+    .get(users.requiresLogin, meals.list)
+    .post(users.requiresLogin, meals.create);
 
   app.route('/api/meals/:mealId')
     .get(users.requiresLogin, meals.hasAuthorization, meals.read)

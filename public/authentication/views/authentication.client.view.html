@@ -1,8 +1,8 @@
 <section ng-controller="AuthenticationController">
-  <div data-ng-show="!authentication.user">
-    <a href="/signup">Signup</a>
-    <a href="/signin">Signin</a>
-  </div>
+  <ul data-ng-show="!authentication.user">
+    <li><a href="/signup">Sign Up</a></li>
+    <li><a href="/signin">Sign In</a></li>
+  </ul>
   <div data-ng-show="authentication.user">
     <h1>Hello <span data-ng-bind="authentication.user.user_name"></span></h1>
     <a href="/signout">Signout</a>
