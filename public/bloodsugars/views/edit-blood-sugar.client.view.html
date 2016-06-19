@@ -1,3 +1,23 @@
-<section>
-  <span>To Do</span>
+<section data-ng-controller="BloodSugarsController" data-ng-init="findOne()">
+  <h1>Edit Blood Sugar Measurement</h1>
+  <form data-ng-submit="update()" novalidate ng-if="blood_sugar">
+    <div>
+      <label for="blood_sugar_time">Measurement Time:</label>
+      <div>
+        <input type="text" data-ng-model="blood_sugar.measurement_time" id="blood_sugar_time" placeholder="0" required>
+      </div>
+    </div>
+    <div>
+      <label for="measurement">Measurement:</label>
+      <div>
+        <textarea data-ng-model="blood_sugar.measurement" id="measurement" cols="10" rows="1" placeholder="0"></textarea>
+      </div>
+    </div>
+    <div>
+      <input type="submit" value="Update">
+    </div>
+    <div data-ng-show="error">
+      <strong data-ng-bind="error"></strong>
+    </div>
+  </form>
 </section>
