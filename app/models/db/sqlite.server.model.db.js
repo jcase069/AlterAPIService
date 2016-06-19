@@ -45,7 +45,7 @@ module.exports = function(db_file) {
   };
 
   toReturn.listBloodSugars = function(user_id, handler) {
-    db.all("SELECT blood_sugar_id, measurement, measurement_time FROM blood_sugar WHERE user_id=$user_id;",
+    db.all("SELECT blood_sugar_id, measurement, measurement_time FROM blood_sugar WHERE user_id=$user_id ORDER BY measurement_time;",
       {$user_id: user_id}, handler);
   }
 
