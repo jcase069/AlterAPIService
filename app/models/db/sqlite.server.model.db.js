@@ -50,7 +50,7 @@ module.exports = function(db_file) {
   }
 
   toReturn.getBloodSugar = function(user_id, blood_sugar_id, handler) {
-    db.get("SELECT blood_sugar_id, measurement, measurement_time FROM blood_sugar WHERE user_id=$user_id AND blood_sugar_id=$blood_sugar_id;",
+    db.get("SELECT blood_sugar_id, measurement, measurement_time, user_id FROM blood_sugar WHERE user_id=$user_id AND blood_sugar_id=$blood_sugar_id;",
       {$user_id: user_id, $blood_sugar_id: blood_sugar_id},
       handler);
   }
