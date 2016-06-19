@@ -38,10 +38,15 @@ var testBloodSugarCrud = function(callback) {
     createUserForTesting('Blood Sugar Crud', params),
     // 1. Create a blood sugar measurement
     function(callback) {
-      sqlite.addBloodSugar(params.user_id, 42, function(err, val) {
-        blood_sugar_id = val;
-        callback(err, val);
-      });
+      sqlite.addBloodSugar(params.user_id,
+        {
+          measurement: 42,
+          measurement_time: '2015-12-09 10:00',
+        },
+        function(err, val) {
+          blood_sugar_id = val;
+          callback(err, val);
+        });
     },
     // 2. Get the meal measurement
     function(callback) {

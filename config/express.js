@@ -40,6 +40,7 @@ module.exports = function() {
   require('../app/routes/index.server.route.js')(app);
   require('../app/routes/user.server.route.js')(app);
   require('../app/routes/meals.server.route.js')(app);
+  require('../app/routes/blood-sugars.server.route.js')(app);
 
   app.use(express.static('./public'));
 

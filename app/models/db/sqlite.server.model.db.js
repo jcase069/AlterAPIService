@@ -55,10 +55,13 @@ module.exports = function(db_file) {
       handler);
   }
 
-  toReturn.addBloodSugar = function(user_id, measurement, handler) {
+  toReturn.addBloodSugar = function(user_id, blood_sugar, handler) {
     db.serialize(function() {
-      db.run("INSERT INTO blood_sugar (user_id, measurement, measurement_time) VALUES ($user_id, $measurement, current_timestamp)",
-        {$user_id: user_id, $measurement: measurement},
+      db.run("INSERT INTO blood_sugar (user_id, measurement, measurement_time) VALUES ($user_id, $measurement, $timestamp)",
+        {$user_id: user_id,
+          $measurement: blood_sugar.measurement,
+          $timestamp: blood_sugar.measurement_time,
+        },
         dbCallback('addBloodSugar insert')
       );
       db.get("SELECT last_insert_rowid();", function(err, obj) {
@@ -120,7 +123,6 @@ module.exports = function(db_file) {
   };
 
   toReturn.deleteMeal = function (user_id, meal_id, handler) {
-    console.log("Deleting meal "+meal_id+" user "+user_id);
     db.run("DELETE FROM meals WHERE user_id=$user_id AND meal_id=$meal_id",
       {$user_id: user_id, $meal_id: meal_id},
       handler);

@@ -1,0 +1,23 @@
+<section data-ng-controller="BloodSugarsController">
+  <h1>New Blood Sugar Measurement</h1>
+  <form data-ng-submit="create()" novalidate>
+    <div>
+      <label for="measurement_time">Measurement Time</label>
+      <div>
+        <input type="text" data-ng-model="measurement_time" id="measurement_time" placeholder="Now" required>
+      </div>
+    </div>
+    <div>
+      <label for="measurement">Measurement</label>
+      <div>
+        <textarea data-ng-model="measurement" id="measurement" cols="10" rows="1" placeholder="0"></textarea>
+      </div>
+    </div>
+    <div>
+      <input type="submit">
+    </div>
+    <div data-ng-show="error">
+      <strong data-ng-bind="error"></strong>
+    </div>
+  </form>
+</section>

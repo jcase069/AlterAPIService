@@ -1,3 +1,17 @@
-<section>
-  <span>To Do</span>
+<section data-ng-controller="BloodSugarsController" data-ng-init="find()">
+  <h1>Blood Sugars</h1>
+  <span ng-if="authentication.user == null">
+    Log in to view blood sugar measurement list.
+  </span>
+  <div ng-if="authentication.user && authentication.user.user_id">
+    <ul>
+      <li data-ng-repeat="blood_sugar in blood_sugars">
+        <a data-ng-href="#!/bloodsugars/{{blood_sugar.blood_sugar_id}}" data-ng-bind="blood_sugar.measurement_time"></a>
+        <br>
+      </li>
+    </ul>
+    <div>
+      <a href="/#!/bloodsugars/create">Create</a>
+    </div>
+  </div>
 </section>

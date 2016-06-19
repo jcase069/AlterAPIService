@@ -1,3 +1,10 @@
-<section>
-  <span>To Do</span>
+<section data-ng-controller="BloodSugarsController" data-ng-init="findOne()">
+  <h1 data-ng-bind="blood_sugar.measurement_time"></h1>
+  <small>
+    Measurement: <em data-ng-bind="blood_sugar.measurement"></em>
+  </small>
+  <div data-ng-show="authentication.user.user_id == blood_sugar.user_id">
+    <a href="/#!/bloodsugars/{{blood_sugar.blood_sugar_id}}/edit">edit</a>
+    <a href="#" data-ng-click="delete(blood_sugar)">delete</a>
+  </div>
 </section>
